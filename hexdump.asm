@@ -16,29 +16,28 @@ Read:
 
     mov esi, Buff           ; esi 缓冲地址
     mov edi, HexStr         ; 字符串地址
-    xor ecx, ecx            ; ecx 清零
+    xor ecx, ecx            ; ecx 清零，作为字符计数器
 
 Scan:
     xor eax, eax            ; eax 清零
 
     mov edx, ecx
-    shl edx, 1
-    add edx, ecx
+    lea edx, [edx * 2 + edx]  ; edx = ecx * 3 计算出第 n 个字符，在 Digits 中的偏移位置
 
-    mov al, byte [esi + ecx]
+    mov al, byte [esi + ecx]        ; al = Buff[ecx] 处字符
     mov ebx, eax
 
     ; 低字节插入字符串
     and al, 0Fh                     ; 通过 and 00001111 取低字节
     mov al, byte [Digits + eax]
-    mov byte [HexStr + edx + 1], al
+    mov byte [HexStr + edx + 2], al ; 低字节偏移 2
 
     ; 高字节插入字符串
     shr bl, 4                       ; bl >> 4
     mov bl, byte [Digits + ebx]
-    mov byte [HexStr + edx + 0], bl
+    mov byte [HexStr + edx + 1], bl ; 高字节偏移 1
 
-    inc ecx
+    inc ecx                         ; 下一个字符
     cmp ecx, ebp
         jna Scan                    ; ecx <= ebp
 
@@ -58,7 +57,8 @@ Exit:
 
 section .data       ; 数据段
     Digits: db "0123456789ABCDEF"
-    HexStr: db "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00", 10
+    ; 一个字符就对应一组 " 00"，高字节偏移 1，低字节偏移 2 
+    HexStr: db " 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00", 10
     HexLen equ $ - HexStr
 
 section .bss        ; 保存为被初始化的数据的 .bss 段
