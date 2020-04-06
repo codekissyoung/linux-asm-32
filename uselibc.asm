@@ -1,4 +1,4 @@
-[SECTION .text]
+section .text
 
 extern puts
 global main
@@ -22,6 +22,6 @@ main:
     pop ebp
     ret
 
-[section .data]
+section .data
     msg: db "Hello world",0
-[section .bss]
+section .bss

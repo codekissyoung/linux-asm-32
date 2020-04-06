@@ -1,0 +1,28 @@
+     1                                  section .text
+     2                                  
+     3                                  extern puts
+     4                                  global main
+     5                                  
+     6                                  main:
+     7 00000000 90                          nop
+     8 00000001 55                          push ebp
+     9 00000002 89E5                        mov ebp, esp
+    10 00000004 53                          push ebx
+    11 00000005 56                          push esi
+    12 00000006 57                          push edi
+    13                                  
+    14 00000007 68[00000000]                push msg
+    15 0000000C E8(00000000)                call puts
+    16                                  
+    17 00000011 83C408                      add esp, 8
+    18 00000014 5F                          pop edi
+    19 00000015 5E                          pop esi
+    20 00000016 5B                          pop ebx
+    21 00000017 89EC                        mov esp, ebp
+    22 00000019 5D                          pop ebp
+    23 0000001A C3                          ret
+    24                                  
+    25                                  section .data
+    26 00000000 48656C6C6F20776F72-         msg: db "Hello world",0
+    26 00000009 6C6400             
+    27                                  section .bss
