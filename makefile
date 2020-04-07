@@ -1,4 +1,4 @@
-ALL = systemcall hexdump uselibc
+ALL = systemcall hexdump uselibc inputString
 all : $(ALL)
 
 # systemcall
@@ -18,6 +18,12 @@ uselibc : uselibc.o
 	gcc -m32 uselibc.o -o uselibc
 uselibc.o : uselibc.asm
 	nasm -f elf32 -F dwarf uselibc.asm -l uselibc.lst
+
+# inputString 32 位
+inputString : inputString.o
+	gcc -m32 inputString.o -o inputString
+inputString.o : inputString.asm
+	nasm -f elf32 -F dwarf inputString.asm -l inputString.lst
 
 .PHONY=clean
 clean:
