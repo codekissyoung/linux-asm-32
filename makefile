@@ -1,4 +1,4 @@
-ALL = systemcall hexdump uselibc inputString
+ALL = systemcall hexdump uselibc inputString mbr
 all : $(ALL)
 
 # systemcall
@@ -24,6 +24,12 @@ inputString : inputString.o
 	gcc -m32 inputString.o -o inputString
 inputString.o : inputString.asm
 	nasm -f elf32 -F dwarf inputString.asm -l inputString.lst
+
+# mbr 32 位
+# mbr : mbr.o
+# 	ld mbr.o -o mbr.iso
+mbr : mbr.asm
+	nasm -f obj mbr.asm -o mbr -l mbr.lst
 
 .PHONY=clean
 clean:
