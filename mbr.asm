@@ -1,7 +1,7 @@
 mov ax,0xb800                       ; 向文本模式的显示缓冲区
 mov es,ax
 
-;以下显示字符串"Label offset:"
+; 以下显示字符串"Label offset:"
 mov byte [es:0x00],'L'
 mov byte [es:0x01],0x07
 mov byte [es:0x02],'a'
@@ -93,6 +93,6 @@ mov byte [es:0x25],0x07
 infi: jmp near infi                 ; 无限循环
 
 number db 0,0,0,0,0
-
 times 203 db 0
-db 0x55,0xaa
+
+db 0x55, 0xaa

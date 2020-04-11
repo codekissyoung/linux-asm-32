@@ -26,10 +26,10 @@ inputString.o : inputString.asm
 	nasm -f elf32 -F dwarf inputString.asm -l inputString.lst
 
 # mbr 32 位
-# mbr : mbr.o
-# 	ld mbr.o -o mbr.iso
-mbr : mbr.asm
-	nasm -f obj mbr.asm -o mbr -l mbr.lst
+mbr : mbr.o
+	ld86 -d mbr.o -o mbr.iso
+mbr.o : mbr.asm
+	nasm -f obj mbr.asm -o mbr.o -l mbr.lst
 
 .PHONY=clean
 clean:
