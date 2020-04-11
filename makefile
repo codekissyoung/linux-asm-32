@@ -1,4 +1,4 @@
-ALL = systemcall hexdump uselibc inputString mbr
+ALL = systemcall hexdump uselibc inputString mbr.o
 all : $(ALL)
 
 # systemcall
@@ -13,23 +13,21 @@ hexdump : hexdump.o
 hexdump.o : hexdump.asm
 	nasm -f elf64 -g -F dwarf hexdump.asm -l hexdump.lst
 
-# uselibc 32 位
+# uselibc
 uselibc : uselibc.o
 	gcc -m32 uselibc.o -o uselibc
 uselibc.o : uselibc.asm
 	nasm -f elf32 -F dwarf uselibc.asm -l uselibc.lst
 
-# inputString 32 位
+# inputString
 inputString : inputString.o
 	gcc -m32 inputString.o -o inputString
 inputString.o : inputString.asm
 	nasm -f elf32 -F dwarf inputString.asm -l inputString.lst
 
-# mbr 32 位
-mbr : mbr.o
-	ld86 -d mbr.o -o mbr.iso
+# mbr
 mbr.o : mbr.asm
-	nasm -f obj mbr.asm -o mbr.o -l mbr.lst
+	nasm -f obj mbr.asm -o mbr.o
 
 .PHONY=clean
 clean:

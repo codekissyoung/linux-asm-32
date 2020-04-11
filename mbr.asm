@@ -29,7 +29,7 @@ mov byte [es:0x17],0x07
 mov byte [es:0x18],':'
 mov byte [es:0x19],0x07
 
-mov ax,number                   ;   取得标号number的偏移地址
+mov ax,number                  ;   取得标号number的偏移地址
 mov bx,10
 
 ;设置数据段的基地址
