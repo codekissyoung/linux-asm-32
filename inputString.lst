@@ -1,0 +1,79 @@
+     1                                  section .text
+     2                                  
+     3                                  extern stdin
+     4                                  extern fgets
+     5                                  extern printf
+     6                                  extern scanf
+     7                                  
+     8                                  global main
+     9                                  main:
+    10 00000000 55                          push ebp
+    11 00000001 89E5                        mov  ebp, esp
+    12 00000003 53                          push ebx
+    13 00000004 56                          push esi
+    14 00000005 57                          push edi
+    15                                      ;;;;;;;;;;          以上是 C 程序约定，保存现场
+    16                                  
+    17 00000006 68[00000000]                push Sprompt
+    18 0000000B E8(00000000)                call printf
+    19 00000010 83C404                      add  esp, 4         ; printf("Enter string data, followed by Enter : ");
+    20                                  
+    21 00000013 FF35[00000000]              push dword [stdin]
+    22 00000019 6A48                        push 72
+    23 0000001B 68[04000000]                push intString
+    24 00000020 E8(00000000)                call fgets
+    25 00000025 83C40C                      add  esp, 12        ; fgets( intString, 72, stdin );
+    26                                      
+    27 00000028 68[04000000]                push intString
+    28 0000002D 68[54000000]                push Sshow
+    29 00000032 E8(00000000)                call printf
+    30 00000037 83C408                      add  esp, 8         ; printf( "The string you entered was : %s ", intString )
+    31                                  
+    32 0000003A 68[28000000]                push Iprompt
+    33 0000003F E8(00000000)                call printf
+    34 00000044 83C404                      add  esp, 4         ; printf( "Enter an int value, followed by Enter : ")
+    35                                  
+    36 00000047 68[00000000]                push intVal
+    37 0000004C 68[51000000]                push Iformat
+    38 00000051 E8(00000000)                call scanf
+    39 00000056 83C408                      add  esp, 8          ; scanf( "%d", intVal )
+    40                                  
+    41 00000059 FF35[00000000]              push dword [intVal]
+    42 0000005F 68[76000000]                push Ishow
+    43 00000064 E8(00000000)                call printf
+    44 00000069 83C408                      add  esp, 8          ; printf("The int value you entered was : %5d", intVal)
+    45                                  
+    46                                      ;;;;;;;;;;           以下是 C 程序约定，恢复现场
+    47 0000006C 5F                          pop edi
+    48 0000006D 5E                          pop esi
+    49 0000006E 5B                          pop ebx
+    50 0000006F 89EC                        mov esp, ebp
+    51 00000071 5D                          pop ebp
+    52 00000072 C3                          ret
+    53                                  
+    54                                  section .data
+    55                                  
+    56 00000000 456E74657220737472-     Sprompt db 'Enter string data, followed by Enter : ', 0
+    56 00000009 696E6720646174612C-
+    56 00000012 20666F6C6C6F776564-
+    56 0000001B 20627920456E746572-
+    56 00000024 203A2000           
+    57 00000028 456E74657220616E20-     Iprompt db 'Enter an int value, followed by Enter : ', 0
+    57 00000031 696E742076616C7565-
+    57 0000003A 2C20666F6C6C6F7765-
+    57 00000043 6420627920456E7465-
+    57 0000004C 72203A2000         
+    58 00000051 256400                  Iformat db "%d", 0
+    59 00000054 54686520737472696E-     Sshow db "The string you entered was : %s ", 10, 0
+    59 0000005D 6720796F7520656E74-
+    59 00000066 657265642077617320-
+    59 0000006F 3A202573200A00     
+    60 00000076 54686520696E742076-     Ishow db 'The int value you entered was : %5d', 10, 0 
+    60 0000007F 616C756520796F7520-
+    60 00000088 656E74657265642077-
+    60 00000091 6173203A202535640A-
+    60 0000009A 00                 
+    61                                  
+    62                                  section .bss
+    63 00000000 <res 00000004>          intVal resd 1           ; double word
+    64 00000004 <res 00000080>          intString resb 128      ; 128 byte

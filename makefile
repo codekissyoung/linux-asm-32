@@ -25,9 +25,9 @@ inputString : inputString.o
 inputString.o : inputString.asm
 	nasm -f elf32 -F dwarf inputString.asm -l inputString.lst
 
-# mbr
+# mbr  -f bin 就是只生成与程序指令一样的机器码文件
 mbr.o : mbr.asm
-	nasm -f obj mbr.asm -o mbr.o
+	nasm -f bin mbr.asm -o mbr.o
 
 .PHONY=clean
 clean:

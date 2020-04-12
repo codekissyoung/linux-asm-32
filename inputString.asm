@@ -12,7 +12,7 @@ main:
     push ebx
     push esi
     push edi
-    ;;;;;;;;;; 以上是 C 程序约定，保存现场
+    ;;;;;;;;;;          以上是 C 程序约定，保存现场
 
     push Sprompt
     call printf
@@ -36,14 +36,14 @@ main:
     push intVal
     push Iformat
     call scanf
-    add esp, 8          ; scanf( "%d", intVal )
+    add  esp, 8          ; scanf( "%d", intVal )
 
     push dword [intVal]
     push Ishow
     call printf
-    add esp, 8          ; printf("The int value you entered was : %5d", intVal)
+    add  esp, 8          ; printf("The int value you entered was : %5d", intVal)
 
-    ;;;;;;;;;; 以下是 C 程序约定，恢复现场
+    ;;;;;;;;;;           以下是 C 程序约定，恢复现场
     pop edi
     pop esi
     pop ebx
